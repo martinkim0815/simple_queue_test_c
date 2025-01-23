@@ -2,17 +2,28 @@
 #include "queue.h"  
 
 
+class QueueTest : public ::testing::Test {  
+protected:  
+    Queue queue;  
+
+    void SetUp() override {  
+        queue = queue_create(3);  
+    }  
+
+    void TearDown() override {  
+        queue_free(&queue);  
+    }  
+};  
+
 // Failing Test Cases 
-TEST(QueueTest, FailingEnqueueTest) {
-    Queue queue = queue_create(2);
+TEST_F(QueueTest, FailingEnqueueTest) {
     EXPECT_EQ(1, queue_enqueue(&queue, 1));
     EXPECT_EQ(1, queue_enqueue(&queue, 2));
-    EXPECT_EQ(0, queue_enqueue(&queue, 3)); // Expected fail  
+    EXPECT_EQ(1, queue_enqueue(&queue, 3)); 
     EXPECT_EQ(0, queue_enqueue(&queue, 4)); // Expected fail 
 }
 
-TEST(QueueTest, FailingDequeueTest) {  
-    Queue queue = queue_create(3);  
+TEST_F(QueueTest, FailingDequeueTest) {  
     int item;  
     queue_enqueue(&queue, 5);  
     queue_enqueue(&queue, 6);
@@ -25,8 +36,7 @@ TEST(QueueTest, FailingDequeueTest) {
 
 // Success Test Cases
 // Test for Enqueue functionality  
-TEST(QueueTest, EnqueueTest) {  
-    Queue queue = queue_create(3);  
+TEST_F(QueueTest, EnqueueTest) {  
     EXPECT_EQ(1, queue_enqueue(&queue, 5));  
     EXPECT_EQ(1, queue_enqueue(&queue, 6));  
     EXPECT_EQ(1, queue_enqueue(&queue, 7));
@@ -34,8 +44,7 @@ TEST(QueueTest, EnqueueTest) {
 }  
 
 // Test for Dequeue functionality  
-TEST(QueueTest, DequeueTest) {  
-    Queue queue = queue_create(3);  
+TEST_F(QueueTest, DequeueTest) {  
     int item;  
     queue_enqueue(&queue, 5);  
     queue_enqueue(&queue, 6);  
@@ -47,8 +56,8 @@ TEST(QueueTest, DequeueTest) {
 }  
 
 // Test for IsEmpty functionality  
-TEST(QueueTest, IsEmptyTest) {  
-    Queue queue = queue_create(3);  
+TEST_F(QueueTest, IsEmptyTest) {  
+    // Queue queue = queue_create(3);  
     EXPECT_EQ(1, queue_is_empty(&queue)); // Empty  
     queue_enqueue(&queue, 5);  
     EXPECT_EQ(0, queue_is_empty(&queue)); // Not empty  
@@ -57,8 +66,7 @@ TEST(QueueTest, IsEmptyTest) {
 }  
 
 // Test for Peek functionality  
-TEST(QueueTest, PeekTest) {  
-    Queue queue = queue_create(3);  
+TEST_F(QueueTest, PeekTest) {  
     int item;  
 
     // Empty queue
