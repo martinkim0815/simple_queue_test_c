@@ -2,5 +2,6 @@ build/
 CMakeFiles/  
 CMakeCache.txt  
 Makefile  
-googletest
+googletest/build/  
+googletest/install/  
 *.vscode/  
