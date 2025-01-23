@@ -38,6 +38,20 @@ int queue_dequeue(Queue* queue, int* item) {
     return 1;
 }  
 
+int queue_is_empty(Queue* queue) {  
+    return queue->size == 0; 
+}  
+
+int queue_peek(Queue* queue, int* item) {  
+    if (queue->size == 0) {  
+        return 0;  
+    }  
+    if (item) { 
+        *item = queue->array[queue->front];  
+    }  
+    return 1;  
+} 
+
 void queue_free(Queue* queue) {  
     free(queue->array);  
     queue->array = NULL; 
